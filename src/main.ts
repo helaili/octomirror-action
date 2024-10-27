@@ -13,6 +13,7 @@ export async function run(): Promise<void> {
       'https://octomirror.ngrok.dev/api/listAllOrganizations'
     )
     core.debug(`Response code is ${res.message.statusCode}`)
+    console.log(`Response code is ${res.message.statusCode}`)
     if (res.message.statusCode !== 200) {
       throw new Error(`Failed to get organizations: ${res.message.statusMessage}`)
     }
