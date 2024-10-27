@@ -36,11 +36,10 @@ describe('action', () => {
   })
 
   it('gets a token', async () => {
-    getIDTokenMock.mockImplementation(async (aud: string|undefined)  => {
+    getIDTokenMock.mockImplementation(async (aud: string | undefined) => {
       return 'fake-token'
     })
     await main.run()
     expect(runMock).toHaveReturned()
-
   })
 })
