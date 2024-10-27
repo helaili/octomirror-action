@@ -7,7 +7,11 @@ branding:
   icon: 'heart'
   color: 'red'
 
-# Define your outputs here.
+inputs:
+  octomirror-app-url: 
+    description: 'The URL of your GitHub Enterprise Server instance'
+    required: true
+
 outputs:
   organizations:
     description: 'Your output description here'

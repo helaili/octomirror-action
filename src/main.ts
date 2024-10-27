@@ -1,5 +1,6 @@
 import * as core from '@actions/core'
 import * as httplib from '@actions/http-client'
+import { BearerCredentialHandler } from '@actions/http-client/lib/auth'
 
 /**
  * The main function for the action.
@@ -7,14 +8,15 @@ import * as httplib from '@actions/http-client'
  */
 export async function run(): Promise<void> {
   try {
+    const octomirrorAppUrl: string = core.getInput('octomirror-app-url')
     const token: string = await core.getIDToken()
-    console.log(`Token is ${token}`)
-    const http: httplib.HttpClient = new httplib.HttpClient('http-client')
+    const bearer: BearerCredentialHandler = new BearerCredentialHandler(token)
+    const http: httplib.HttpClient = new httplib.HttpClient('http-client', [bearer])
+
     const res: httplib.HttpClientResponse = await http.get(
-      'https://octomirror.ngrok.dev/api/listAllOrganizations'
+      `${octomirrorAppUrl}/api/listAllOrganizations`
     )
-    core.debug(`Response code is ${res.message.statusCode}`)
-    console.log(`Response code is ${res.message.statusCode}`)
+    
     if (res.message.statusCode !== 200) {
       throw new Error(
         `Failed to get organizations: ${res.message.statusMessage}`
