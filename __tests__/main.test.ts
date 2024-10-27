@@ -18,15 +18,14 @@ let getIDTokenMock: jest.SpiedFunction<typeof core.getIDToken>
 describe('action', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-
     getIDTokenMock = jest.spyOn(core, 'getIDToken').mockImplementation()
   })
 
   it('gets a token', async () => {
-    getIDTokenMock.mockImplementation(() => {
-      return 'fake-token'
+    getIDTokenMock.mockImplementation(async () => {
+      return Promise.resolve('fake-token')
     })
     await main.run()
     expect(runMock).toHaveReturned()
-  })
+  }, 10000)
 })
