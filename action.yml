@@ -8,7 +8,7 @@ branding:
   color: 'red'
 
 inputs:
-  octomirror-app-url: 
+  octomirror-app-url:
     description: 'The URL of your GitHub Enterprise Server instance'
     required: true
 

@@ -11,12 +11,14 @@ export async function run(): Promise<void> {
     const octomirrorAppUrl: string = core.getInput('octomirror-app-url')
     const token: string = await core.getIDToken()
     const bearer: BearerCredentialHandler = new BearerCredentialHandler(token)
-    const http: httplib.HttpClient = new httplib.HttpClient('http-client', [bearer])
+    const http: httplib.HttpClient = new httplib.HttpClient('http-client', [
+      bearer
+    ])
 
     const res: httplib.HttpClientResponse = await http.get(
       `${octomirrorAppUrl}/api/listAllOrganizations`
     )
-    
+
     if (res.message.statusCode !== 200) {
       throw new Error(
         `Failed to get organizations: ${res.message.statusMessage}`

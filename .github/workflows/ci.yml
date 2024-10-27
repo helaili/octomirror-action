@@ -58,7 +58,7 @@ jobs:
         id: test-action
         uses: ./
         with:
-          octomirror-app-url: https://octomirror.ngrok.dev 
+          octomirror-app-url: https://octomirror.ngrok.dev
 
       - name: Print Output
         id: output
