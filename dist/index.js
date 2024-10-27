@@ -25682,6 +25682,7 @@ async function run() {
         if (res.message.statusCode !== 200) {
             throw new Error(`Failed to get organizations: ${res.message.statusMessage}`);
         }
+        core.setOutput('organizations', JSON.parse(await res.readBody()));
     }
     catch (error) {
         // Fail the workflow run if an error occurs

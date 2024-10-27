@@ -20,6 +20,7 @@ export async function run(): Promise<void> {
         `Failed to get organizations: ${res.message.statusMessage}`
       )
     }
+    core.setOutput('organizations', JSON.parse(await res.readBody()))
   } catch (error) {
     // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
