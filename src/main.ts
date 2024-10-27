@@ -8,6 +8,7 @@ import * as httplib from '@actions/http-client'
 export async function run(): Promise<void> {
   try {
     const token: string = await core.getIDToken()
+    console.log(`Token is ${token}`)
     const http: httplib.HttpClient = new httplib.HttpClient('http-client')
     const res: httplib.HttpClientResponse = await http.get(
       'https://octomirror.ngrok.dev/api/listAllOrganizations'
