@@ -10,8 +10,8 @@ export async function run(): Promise<void> {
   try {
     const octomirrorAppUrl: string = core.getInput('octomirror-app-url')
     const token: string = await core.getIDToken()
-    console.log(`Got token: ${token}`)
     const bearer: BearerCredentialHandler = new BearerCredentialHandler(token)
+    console.log(`Got token: ${bearer}`)
     const http: httplib.HttpClient = new httplib.HttpClient('http-client', [
       bearer
     ])
