@@ -10,15 +10,18 @@ export async function run(): Promise<void> {
   try {
     const octomirrorAppUrl: string = core.getInput('octomirror-app-url')
     const token: string = await core.getIDToken()
-    const bearer: BearerCredentialHandler = new BearerCredentialHandler(token)
-    console.log(`Got token: ${bearer}`)
-    const http: httplib.HttpClient = new httplib.HttpClient('http-client', [
-      bearer
-    ])
+    //const bearer: BearerCredentialHandler = new BearerCredentialHandler(token)
+    //console.log(`Got token: ${bearer}`)
+    const http: httplib.HttpClient = new httplib.HttpClient('http-client')
 
     const res: httplib.HttpClientResponse = await http.get(
-      `${octomirrorAppUrl}/api/listAllOrganizations`
+      `${octomirrorAppUrl}/api/listAllOrganizations`,
+      {
+        Authorization: `Bearer ${token}`
+      }
     )
+
+    console.log(`Got response: ${res}`)
 
     if (res.message.statusCode !== 200) {
       throw new Error(
