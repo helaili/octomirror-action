@@ -25667,6 +25667,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = run;
 const core = __importStar(__nccwpck_require__(7484));
 const httplib = __importStar(__nccwpck_require__(4844));
+const auth_1 = __nccwpck_require__(4552);
 /**
  * The main function for the action.
  * @returns {Promise<void>} Resolves when the action is complete.
@@ -25675,13 +25676,11 @@ async function run() {
     try {
         const octomirrorAppUrl = core.getInput('octomirror-app-url');
         const token = await core.getIDToken();
-        //const bearer: BearerCredentialHandler = new BearerCredentialHandler(token)
-        //console.log(`Got token: ${bearer}`)
-        const http = new httplib.HttpClient('http-client');
-        const res = await http.get(`${octomirrorAppUrl}/api/listAllOrganizations`, {
-            authorization: `Bearer ${token}`
-        });
-        console.log(`Got response: ${res}`);
+        const bearer = new auth_1.BearerCredentialHandler(token);
+        const http = new httplib.HttpClient('http-client', [
+            bearer
+        ]);
+        const res = await http.get(`${octomirrorAppUrl}/api/listAllOrganizations`);
         if (res.message.statusCode !== 200) {
             throw new Error(`Failed to get organizations: ${res.message.statusMessage}`);
         }
