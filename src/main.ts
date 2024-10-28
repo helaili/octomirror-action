@@ -15,8 +15,9 @@ export async function run(): Promise<void> {
     const http: httplib.HttpClient = new httplib.HttpClient('http-client')
 
     const res: httplib.HttpClientResponse = await http.get(
-      `${octomirrorAppUrl}/api/listAllOrganizations`, {
-        'authorization': `Bearer ${token}`
+      `${octomirrorAppUrl}/api/listAllOrganizations`,
+      {
+        authorization: `Bearer ${token}`
       }
     )
 

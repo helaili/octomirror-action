@@ -25679,7 +25679,7 @@ async function run() {
         //console.log(`Got token: ${bearer}`)
         const http = new httplib.HttpClient('http-client');
         const res = await http.get(`${octomirrorAppUrl}/api/listAllOrganizations`, {
-            Authorization: `Bearer ${token}`
+            authorization: `Bearer ${token}`
         });
         console.log(`Got response: ${res}`);
         if (res.message.statusCode !== 200) {
