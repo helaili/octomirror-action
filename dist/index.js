@@ -25677,6 +25677,7 @@ async function run() {
         const octomirrorAppUrl = core.getInput('octomirror-app-url');
         const token = await core.getIDToken();
         const bearer = new auth_1.BearerCredentialHandler(token);
+        core.info(`token finishes with ${token.slice(-5)}`);
         const http = new httplib.HttpClient('http-client', [
             bearer
         ]);
