@@ -8,9 +8,18 @@ branding:
   color: 'red'
 
 inputs:
-  octomirror-app-url:
+  app-url:
+    description: 'The URL of your Octomirror app'
+    required: true
+  server-url:
     description: 'The URL of your GitHub Enterprise Server instance'
     required: true
+  pat:
+    description: 'The PAT to create orgs, repo and everything else'
+    required: true
+  init-mode:
+    description: 'Non incremental synchronisation mode'
+    default: false
 
 outputs:
   organizations:
