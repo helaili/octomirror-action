@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "author": "",
   "private": true,
+  "type": "module",
   "homepage": "https://github.com/helaili/octomirror-action",
   "repository": {
     "type": "git",
@@ -68,8 +69,8 @@
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
-    "@actions/http-client": "^2.2.3",
-    "octokit": "^4.0.2"
+    "@octokit/core": "^6.1.2",
+    "axios": "^1.7.7"
   },
   "devDependencies": {
     "@github/local-action": "^2.1.2",

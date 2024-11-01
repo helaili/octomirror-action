@@ -1,7 +1,6 @@
 import * as core from '@actions/core'
-import * as httplib from '@actions/http-client'
-import { BearerCredentialHandler } from '@actions/http-client/lib/auth'
-import { Octokit } from "octokit";
+import axios from 'axios'
+import { Octokit } from '@octokit/core'
 
 /**
  * The main function for the action.
@@ -13,32 +12,32 @@ export async function run(): Promise<void> {
     const serverUrl: string = core.getInput('server-url')
     const pat: string = core.getInput('pat')
     const token: string = await core.getIDToken()
-    const initMode: boolean = core.getInput('init-mode') === 'true';
-    const bearer: BearerCredentialHandler = new BearerCredentialHandler(token)
-    
-    const http: httplib.HttpClient = new httplib.HttpClient('http-client', [
-      bearer
-    ])
+    const initMode: boolean = core.getInput('init-mode') === 'true'
+
+    const axiosInstance = axios.create({
+      baseURL: octomirrorAppUrl,
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
 
     const octokit = new Octokit({
       auth: pat,
-      baseUrl: serverUrl,
+      baseUrl: serverUrl
     })
-    
-    if(initMode) {
-      const res: httplib.HttpClientResponse = await http.get(
+
+    if (initMode) {
+      const res = await axiosInstance.get(
         `${octomirrorAppUrl}/api/listAllOrganizations`
       )
 
-      if (res.message.statusCode !== 200) {
-        throw new Error(
-          `Failed to get organizations: ${res.message.statusMessage}`
-        )
+      if (res.status !== 200) {
+        throw new Error(`Failed to get organizations: ${res.statusText}`)
       }
 
-      const orgs = JSON.parse(await res.readBody())
+      const orgs = JSON.parse(res.data)
       core.setOutput('organizations', orgs)
-      createOrgs(octokit, orgs) 
+      createOrgs(octokit, orgs)
     }
   } catch (error) {
     // Fail the workflow run if an error occurs
