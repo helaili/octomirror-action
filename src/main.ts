@@ -1,6 +1,6 @@
 import * as core from '@actions/core'
 import axios from 'axios'
-import { Octokit } from '@octokit/core'
+import * as Octokit from '@octokit/core'
 
 /**
  * The main function for the action.
@@ -23,7 +23,7 @@ export async function run(): Promise<void> {
       }
     })
 
-    const octokit = new Octokit({
+    const octokit = new Octokit.Octokit({
       auth: pat,
       baseUrl: serverUrl
     })
@@ -50,7 +50,7 @@ export async function run(): Promise<void> {
 }
 
 async function createOrgs(
-  octokit: Octokit,
+  octokit: Octokit.Octokit,
   orgs: string[],
   adminUser: string
 ): Promise<void> {
