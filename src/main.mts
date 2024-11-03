@@ -10,6 +10,7 @@ export async function run(): Promise<void> {
   try {
     const octomirrorAppUrl: string = core.getInput('app-url')
     const serverUrl: string = core.getInput('server-url')
+    const adminUser: string = core.getInput('admin-user')
     const pat: string = core.getInput('pat')
     const token: string = await core.getIDToken()
     const initMode: boolean = core.getInput('init-mode') === 'true'
@@ -37,7 +38,7 @@ export async function run(): Promise<void> {
 
       const orgs = JSON.parse(res.data)
       core.setOutput('organizations', orgs)
-      createOrgs(octokit, orgs)
+      createOrgs(octokit, orgs, adminUser)
     }
   } catch (error) {
     // Fail the workflow run if an error occurs
@@ -45,6 +46,12 @@ export async function run(): Promise<void> {
   }
 }
 
-async function createOrgs(octokit: Octokit, orgs: string[]) {
+async function createOrgs(octokit: Octokit, orgs: string[], adminUser: string) {
   // Use octokit to create the orgs
+  for (const org of orgs) {
+    await octokit.request('POST /admin/organizations', {
+      login: org,
+      admin: adminUser
+    })
+  }
 }

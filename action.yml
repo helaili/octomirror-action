@@ -14,6 +14,10 @@ inputs:
   server-url:
     description: 'The URL of your GitHub Enterprise Server instance'
     required: true
+  admin-user:
+    description: 'The user that will create orgs, repo and everything else'
+    default: 'ghe-admin'
+    required: true
   pat:
     description: 'The PAT to create orgs, repo and everything else'
     required: true
