@@ -24,6 +24,9 @@ inputs:
   init-mode:
     description: 'Non incremental synchronisation mode'
     default: false
+  dry-run:
+    description: 'Dry run mode'
+    default: false
 
 outputs:
   organizations:

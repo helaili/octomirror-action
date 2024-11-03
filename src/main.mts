@@ -14,6 +14,7 @@ export async function run(): Promise<void> {
     const pat: string = core.getInput('pat')
     const token: string = await core.getIDToken()
     const initMode: boolean = core.getInput('init-mode') === 'true'
+    const dryRun: boolean = core.getInput('dry-run') === 'true'
 
     const axiosInstance = axios.create({
       baseURL: octomirrorAppUrl,
@@ -38,7 +39,9 @@ export async function run(): Promise<void> {
 
       const orgs = JSON.parse(res.data)
       core.setOutput('organizations', orgs)
-      createOrgs(octokit, orgs, adminUser)
+      if (!dryRun) {
+        await createOrgs(octokit, orgs, adminUser)
+      }
     }
   } catch (error) {
     // Fail the workflow run if an error occurs
