@@ -37161,7 +37161,7 @@ async function run() {
         console.log(`Creating octokit for server ${serverUrl} using PAT ${pat.slice(0, 4)}...`);
         const octokit = new Octokit({
             auth: pat,
-            baseUrl: `${serverUrl}api/v3/`
+            baseUrl: `${serverUrl}/api/v3`
         });
         if (initMode) {
             const res = await axiosInstance.get(`${octomirrorAppUrl}/api/listAllOrganizations`);

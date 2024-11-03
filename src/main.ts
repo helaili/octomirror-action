@@ -28,7 +28,7 @@ export async function run(): Promise<void> {
     )
     const octokit = new Octokit.Octokit({
       auth: pat,
-      baseUrl: `${serverUrl}api/v3/`
+      baseUrl: `${serverUrl}/api/v3`
     })
 
     if (initMode) {
