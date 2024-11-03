@@ -37,7 +37,7 @@ export async function run(): Promise<void> {
         throw new Error(`Failed to get organizations: ${res.statusText}`)
       }
 
-      const orgs = JSON.parse(res.data)
+      const orgs: string[] = JSON.parse(res.data)
       core.setOutput('organizations', orgs)
       if (!dryRun) {
         await createOrgs(octokit, orgs, adminUser)
@@ -49,7 +49,7 @@ export async function run(): Promise<void> {
   }
 }
 
-async function createOrgs(octokit: Octokit, orgs: string[], adminUser: string) {
+async function createOrgs(octokit: Octokit, orgs: string[], adminUser: string): Promise<void> {
   // Use octokit to create the orgs
   for (const org of orgs) {
     await octokit.request('POST /admin/organizations', {
