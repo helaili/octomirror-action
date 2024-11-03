@@ -37158,6 +37158,7 @@ async function run() {
                 Authorization: `Bearer ${token}`
             }
         });
+        console.log(`Creating octokit for server ${serverUrl} using PAT ${pat.slice(0, 4)}...`);
         const octokit = new Octokit({
             auth: pat,
             baseUrl: serverUrl
@@ -37184,6 +37185,7 @@ async function run() {
 async function createOrgs(octokit, orgs, adminUser) {
     // Use octokit to create the orgs
     for (const org of orgs) {
+        console.log(`Creating org ${org} with owner ${adminUser}...`);
         await octokit.request('POST /admin/organizations', {
             login: org,
             admin: adminUser

@@ -23,6 +23,9 @@ export async function run(): Promise<void> {
       }
     })
 
+    console.log(
+      `Creating octokit for server ${serverUrl} using PAT ${pat.slice(0, 4)}...`
+    )
     const octokit = new Octokit.Octokit({
       auth: pat,
       baseUrl: serverUrl
@@ -58,6 +61,7 @@ async function createOrgs(
 ): Promise<void> {
   // Use octokit to create the orgs
   for (const org of orgs) {
+    console.log(`Creating org ${org} with owner ${adminUser}...`)
     await octokit.request('POST /admin/organizations', {
       login: org,
       admin: adminUser
