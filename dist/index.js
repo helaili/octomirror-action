@@ -37185,11 +37185,17 @@ async function run() {
 async function createOrgs(octokit, orgs, adminUser) {
     // Use octokit to create the orgs
     for (const org of orgs) {
-        console.log(`Creating org ${org} with owner ${adminUser}...`);
-        await octokit.request('POST /admin/organizations', {
-            login: org,
-            admin: adminUser
-        });
+        try {
+            console.log(`Creating org ${org} with owner ${adminUser}...`);
+            const response = await octokit.request('POST /admin/organizations', {
+                login: org,
+                admin: adminUser
+            });
+        }
+        catch (error) {
+            console.error(`Failed to create org ${org}:`, error);
+            core.setFailed(`Failed to create org ${org}: ${error}`);
+        }
     }
 }
 
