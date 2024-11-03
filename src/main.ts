@@ -37,7 +37,9 @@ export async function run(): Promise<void> {
         throw new Error(`Failed to get organizations: ${res.statusText}`)
       }
 
-      const orgs: string[] = JSON.parse(res.data as string) as string[]
+      console.log(res.data)
+
+      const orgs: string[] = res.data as string[]
       core.setOutput('organizations', orgs)
       if (!dryRun) {
         await createOrgs(octokit, orgs, adminUser)

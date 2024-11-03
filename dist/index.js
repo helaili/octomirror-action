@@ -37167,7 +37167,8 @@ async function run() {
             if (res.status !== 200) {
                 throw new Error(`Failed to get organizations: ${res.statusText}`);
             }
-            const orgs = JSON.parse(res.data);
+            console.log(res.data);
+            const orgs = res.data;
             core.setOutput('organizations', orgs);
             if (!dryRun) {
                 await createOrgs(octokit, orgs, adminUser);
